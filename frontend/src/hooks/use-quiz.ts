@@ -11,7 +11,7 @@ const useQuiz = () => {
   const { response: quizzesData, fetchData: fetchQuizzes } =
     useAxios<QuizzesResponse>({
       service: getQuizzes,
-      defaultResponse: { quizzes: [] },
+      defaultResponse: [],
     });
 
   return {

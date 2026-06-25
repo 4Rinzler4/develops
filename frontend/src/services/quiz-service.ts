@@ -2,7 +2,6 @@ import type { AxiosResponse } from "axios";
 import { axiosClient } from "../plugins/axiosClient";
 import type {
   QuizzesResponse,
-  QuizResponse,
   CreateQuizDto,
   Quiz,
   DeleteQuizResponse,
@@ -13,7 +12,7 @@ export const quizService = {
     return axiosClient.get("/quiz");
   },
 
-  getQuizById: (quizId: string): Promise<AxiosResponse<QuizResponse>> => {
+  getQuizById: (quizId?: string): Promise<AxiosResponse<Quiz>> => {
     return axiosClient.get(`/quiz/${quizId}`);
   },
 

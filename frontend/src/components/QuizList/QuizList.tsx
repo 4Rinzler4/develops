@@ -1,25 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useQuiz from "../../hooks/use-quiz";
 import QuizItem from "../QuizItem/QuizItem";
+import styles from "../QuizList/QuizList.module.css";
+import type { Quiz } from "../../types/common-types";
 
 const QuizList = () => {
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const { quizzesData, fetchQuizzes } = useQuiz();
+
   useEffect(() => {
     fetchQuizzes();
   }, [fetchQuizzes]);
 
-  console.log(quizzesData);
+  useEffect(() => {
+    if (Array.isArray(quizzesData)) {
+      setQuizzes(quizzesData ?? []);
+    }
+  }, [quizzesData]);
+
+  const handleRemove = (id: string) => {
+    setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
+  };
 
   return (
     <>
-      {quizzesData?.quizzes.map((quiz) => (
-        <QuizItem
-          key={quiz.id}
-          id={quiz.id}
-          title={quiz.title}
-          numQuestions={quiz.questions.length}
-        />
-      ))}
+      <div className={styles.listContainer}>
+        {quizzes.map((quiz) => (
+          <QuizItem
+            key={quiz.id}
+            id={quiz.id}
+            title={quiz.title}
+            numQuestions={quiz.questions.length}
+            onRemove={handleRemove}
+          />
+        ))}
+      </div>
     </>
   );
 };

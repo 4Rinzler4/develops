@@ -23,9 +23,7 @@ export type QuizResponse = {
   quiz: Quiz;
 };
 
-export type QuizzesResponse = {
-  quizzes: Quiz[];
-};
+export type QuizzesResponse = Quiz[];
 
 export type DeleteQuizResponse = {
   success: boolean;
