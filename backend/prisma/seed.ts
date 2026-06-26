@@ -8,7 +8,7 @@ const adapter = new PrismaPg(pool);
 
 const prisma = new PrismaClient({ adapter });
 
-async function main() {
+const main = async () => {
   await prisma.quiz.create({
     data: {
       title: 'Frontend Basics Quiz',
@@ -40,7 +40,71 @@ async function main() {
       },
     },
   });
-}
+
+  await prisma.quiz.create({
+    data: {
+      title: 'JavaScript Fundamentals Quiz',
+      questions: {
+        create: [
+          {
+            text: 'JavaScript is a statically typed language?',
+            type: QuestionType.BOOLEAN,
+            correctAnswer: 'false',
+          },
+          {
+            text: 'Which keyword declares a constant in JavaScript?',
+            type: QuestionType.INPUT,
+            correctAnswer: 'const',
+          },
+          {
+            text: 'Choose valid JavaScript data types',
+            type: QuestionType.CHECKBOX,
+            options: {
+              create: [
+                { text: 'string', isCorrect: true },
+                { text: 'boolean', isCorrect: true },
+                { text: 'character', isCorrect: false },
+                { text: 'undefined', isCorrect: true },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  await prisma.quiz.create({
+    data: {
+      title: 'CSS & Layout Quiz',
+      questions: {
+        create: [
+          {
+            text: 'Flexbox is used for layout in CSS?',
+            type: QuestionType.BOOLEAN,
+            correctAnswer: 'true',
+          },
+          {
+            text: 'Which CSS property changes text color?',
+            type: QuestionType.INPUT,
+            correctAnswer: 'color',
+          },
+          {
+            text: 'Choose valid CSS display values',
+            type: QuestionType.CHECKBOX,
+            options: {
+              create: [
+                { text: 'flex', isCorrect: true },
+                { text: 'grid', isCorrect: true },
+                { text: 'overlap', isCorrect: false },
+                { text: 'block', isCorrect: true },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+};
 
 main()
   .then(async () => {
