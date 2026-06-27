@@ -7,6 +7,7 @@ export class QuizService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateQuizDto) {
+    console.log(dto);
     return this.prisma.quiz.create({
       data: {
         title: dto.title,
@@ -15,22 +16,23 @@ export class QuizService {
               create: dto.questions.map((q) => ({
                 text: q.text,
                 type: q.type,
-                correctAnswer: q.correctAnswer,
-                options: q.options
-                  ? {
-                      create: q.options.map((o) => ({
-                        text: o.text,
-                        isCorrect: o.isCorrect,
-                      })),
-                    }
-                  : undefined,
+
+                options:
+                  q.type === 'CHECKBOX'
+                    ? {
+                        create: [],
+                      }
+                    : undefined,
               })),
             }
           : undefined,
       },
+
       include: {
         questions: {
-          include: { options: true },
+          include: {
+            options: true,
+          },
         },
       },
     });

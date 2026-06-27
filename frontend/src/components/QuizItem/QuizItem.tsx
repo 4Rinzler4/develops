@@ -20,13 +20,15 @@ const QuizItem: FC<QuizItemProps> = ({ id, title, numQuestions, onRemove }) => {
   return (
     <>
       <div className={styles.quizCard}>
-        <Link to={`/quiz/${id}`}>
+        <div className={styles.deleteButtonContainer}>
+          <DeleteButton handleRemove={handleRemove} />
+        </div>
+        <Link to={`/quiz/${id}`} className={styles.link}>
           <div>
             <h2>{title}</h2>
             <p>Count questions: {numQuestions}</p>
           </div>
         </Link>
-        <DeleteButton handleRemove={handleRemove} />
       </div>
     </>
   );

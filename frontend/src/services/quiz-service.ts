@@ -8,19 +8,21 @@ import type {
 } from "../types/common-types";
 
 export const quizService = {
-  getQuizzes: (): Promise<AxiosResponse<QuizzesResponse>> => {
-    return axiosClient.get("/quiz");
+  getQuizzes: async (): Promise<AxiosResponse<QuizzesResponse>> => {
+    return await axiosClient.get("/quiz");
   },
 
-  getQuizById: (quizId?: string): Promise<AxiosResponse<Quiz>> => {
-    return axiosClient.get(`/quiz/${quizId}`);
+  getQuizById: async (quizId?: string): Promise<AxiosResponse<Quiz>> => {
+    return await axiosClient.get(`/quiz/${quizId}`);
   },
 
-  createQuiz: (data: CreateQuizDto): Promise<AxiosResponse<Quiz>> => {
-    return axiosClient.post("/quiz", data);
+  createQuiz: async (quiz: CreateQuizDto): Promise<Quiz> => {
+    return await axiosClient.post("/quiz", quiz);
   },
 
-  deleteQuiz: (quizId: string): Promise<AxiosResponse<DeleteQuizResponse>> => {
-    return axiosClient.delete(`/quiz/${quizId}`);
+  deleteQuiz: async (
+    quizId: string,
+  ): Promise<AxiosResponse<DeleteQuizResponse>> => {
+    return await axiosClient.delete(`/quiz/${quizId}`);
   },
 };

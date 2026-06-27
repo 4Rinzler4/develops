@@ -1,7 +1,32 @@
 .quizCard {
-  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 20px;
+  border: 2px solid black;
   background-color: #fff;
-  max-width: 250px;
+  max-width: 300px;
+  border-radius: 8px;
+  height: 180px;
   text-align: center;
+  color: black;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+.deleteButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.quizCard:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }

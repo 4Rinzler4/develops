@@ -27,27 +27,30 @@ const useAxios = <Response, Params = undefined>({
   const [error, setError] = useState<ErrorResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchData = useCallback(async (params?: Params) => {
-    try {
-      setLoading(true);
-  
-      const res = await service(params);
-      const responseData = res.data;
-  
-      setResponse(responseData);
-      setError(null);
-  
-      onResponse?.(responseData);
-    } catch (e) {
-      const error = e as AxiosError<ErrorResponse>;
-  
-      if (error.response) {
-        setError(error.response.data);
+  const fetchData = useCallback(
+    async (params?: Params) => {
+      try {
+        setLoading(true);
+
+        const res = await service(params);
+        const responseData = res.data;
+
+        setResponse(responseData);
+        setError(null);
+
+        onResponse?.(responseData);
+      } catch (e) {
+        const error = e as AxiosError<ErrorResponse>;
+
+        if (error.response) {
+          setError(error.response.data);
+        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [service, onResponse]);
+    },
+    [service, onResponse],
+  );
 
   return { response, error, loading, fetchData };
 };

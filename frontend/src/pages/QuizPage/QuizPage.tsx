@@ -4,6 +4,7 @@ import { useCallback, useEffect } from "react";
 import { quizService } from "../../services/quiz-service";
 import type { Quiz } from "../../types/common-types";
 import styles from "../QuizPage/QuizPage.module.css";
+import renderQuestionInput from "../../plugins/helperFunctions";
 
 const QuizPage = () => {
   const { quizId } = useParams();
@@ -27,7 +28,7 @@ const QuizPage = () => {
 
   return (
     <>
-      <button className={styles.quizButton} onClick={handleBackClick}>
+      <button className={styles.quizBackButton} onClick={handleBackClick}>
         Back
       </button>
       <div className={styles.quizContainer}>
@@ -35,7 +36,10 @@ const QuizPage = () => {
           <h1 className={styles.quizTitle}>{quizData.title}</h1>
           <div className={styles.questionContainer}>
             {quizData.questions.map((question) => (
-              <h3 key={question.id}>{question.text}</h3>
+              <div key={question.id} className={styles.questionItem}>
+                <h3>{question.text}</h3>
+                {renderQuestionInput(question)}
+              </div>
             ))}
           </div>
         </div>

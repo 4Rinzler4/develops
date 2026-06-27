@@ -1,4 +1,4 @@
-export type QuestionType = "boolean" | "input" | "checkbox";
+export type QuestionType = "BOOLEAN" | "INPUT" | "CHECKBOX";
 
 export type Question = {
   id: string;
