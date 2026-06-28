@@ -10,6 +10,9 @@ const QuizPage = () => {
   const { quizId } = useParams();
 
   const getQuizById = useCallback(() => {
+    if (!quizId) {
+      throw new Error("Quiz id is required");
+    }
     return quizService.getQuizById(quizId);
   }, [quizId]);
 

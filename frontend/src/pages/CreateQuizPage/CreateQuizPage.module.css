@@ -9,3 +9,23 @@
   font-size: 16px;
   font-weight: bold;
 }
+
+.quizBuilderContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(28, 0, 128, 0.623);
+  color: white;
+  max-width: 500px;
+  padding: 20px;
+  height: 100%;
+
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.quizBuilderHeader {
+  display: inline;
+  text-align: center;
+  width: 100%;
+}

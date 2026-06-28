@@ -11,8 +11,10 @@ const createQuizPage = () => {
       <button className={styles.quizBackButton} onClick={handleBackClick}>
         Back
       </button>
-      <h1>Quiz Builder</h1>
-      <QuizBuilderInputs />
+      <div className={styles.quizBuilderContainer}>
+        <h1 className={styles.quizBuilderHeader}>Quiz Builder</h1>
+        <QuizBuilderInputs />
+      </div>
     </>
   );
 };

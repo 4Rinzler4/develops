@@ -3,8 +3,12 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { type QuizFormData, createQuizSchema } from "../../schemas/quiz-schema";
 import { quizService } from "../../services/quiz-service";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import styles from "../QuizBuilderInputs/QuizBuilderInputs.module.css";
+import { useEffect, useState } from "react";
+import SuccessMessage from "../SuccessMessage/SuccessMessage";
 
 const QuizBuilderInputs = () => {
+  const [successMsg, setSuccessMsg] = useState<string | null>(null)
   const {
     register,
     control,
@@ -34,58 +38,92 @@ const QuizBuilderInputs = () => {
   const onSubmit = async (data: QuizFormData) => {
     try {
       await quizService.createQuiz(data);
-      reset();
+      setSuccessMsg("The quiz was successfully created")
+      reset();      
     } catch (error) {
       console.log("Error", error);
     }
   };
+ 
+  useEffect(() => {
+    if(!successMsg) return
+    setTimeout(() => {
+      setSuccessMsg('')
+    }, 5000)
+  }, [successMsg])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Quiz Title:</label>
+    <>
+    <form className={styles.quizForm} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Quiz Title</label>
 
-        <input type="text" placeholder="Quiz Title" {...register("title")} />
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Quiz Title"
+          {...register("title")}
+          />
 
         <ErrorMessage message={errors.title?.message} />
       </div>
 
-      <div>
-        <h3>Questions</h3>
+      <div className={styles.questionsSection}>
+        <div className={styles.sectionHeader}>
+          <h3>Questions</h3>
+
+          <button
+            className={styles.addButton}
+            type="button"
+            onClick={handleAddQuestion}
+            >
+            + Add Question
+          </button>
+        </div>
 
         {fields.map((field, index) => (
-          <div key={field.id} style={{ marginBottom: "12px" }}>
+          <div key={field.id} className={styles.questionCard}>
             <input
+              className={styles.input}
               type="text"
               placeholder="Question text"
               {...register(`questions.${index}.text`)}
-            />
+              />
 
             <ErrorMessage message={errors.questions?.[index]?.text?.message} />
 
-            <select {...register(`questions.${index}.type`)}>
+            <select
+              className={styles.select}
+              {...register(`questions.${index}.type`)}
+              >
               <option value="INPUT">Input</option>
               <option value="CHECKBOX">Multiple Choice</option>
               <option value="BOOLEAN">Boolean</option>
             </select>
 
-            <button type="button" onClick={() => remove(index)}>
+            <button
+              className={styles.deleteButton}
+              type="button"
+              onClick={() => remove(index)}
+              >
               Delete
             </button>
           </div>
         ))}
 
         <ErrorMessage message={errors.questions?.message} />
-
-        <button type="button" onClick={handleAddQuestion}>
-          Add question
-        </button>
       </div>
 
-      <button type="submit" disabled={!errors}>
+      <button
+        className={styles.submitButton}
+        type="submit"
+        disabled={Object.keys(errors).length > 0}
+        >
         Create Quiz
       </button>
     </form>
+    <SuccessMessage successMsg={successMsg} />
+        </>
   );
 };
 

@@ -10,7 +10,7 @@ const QuizList = () => {
 
   useEffect(() => {
     fetchQuizzes();
-  }, [fetchQuizzes]);
+  }, [fetchQuizzes, quizzes]);
 
   useEffect(() => {
     if (Array.isArray(quizzesData)) {
